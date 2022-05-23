@@ -20,6 +20,8 @@ public class Transport
     double[] betas;
 
     List<int[]> checked = new ArrayList<int[]> (); 
+    List<double[][]> everyIteration = new ArrayList<double[][]> (); 
+
 
     Transport(int a, int b)
     {   
@@ -417,6 +419,7 @@ public class Transport
             printDeals();
             printDeltas();
             printBase();
+            everyIteration.add(deals);
         }
     }
 
