@@ -29,14 +29,14 @@
 
     <div id="aaaaaaaaaaaaa"></div>
     <label style="color:black">Supp</label>
-    <input id="supp" value="" />
+    <input type="number" id="supp" value="" />
     <!--
     <button id="supp_button">Enter</button>
     <button id="cust_button">Enter</button>
     -->
     <div id="aaaaaaaaaaaaa"></div>
     <label style="color:black">Cust</label>
-    <input id="cust" value="" />
+    <input type="number" id="cust" value="" />
     
 
 
@@ -54,14 +54,15 @@
             const name = document.getElementById('Oblicz').value;
             console.log("Cust" + cust);
             const data = {name, supp, cust };
+            console.log(typeof supp);
+            console.log(typeof data);
             console.log(JSON.stringify(data));
-            alert("123");
             const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
             };
             const response = await fetch('/newdata', options);
             const json = await response.json();

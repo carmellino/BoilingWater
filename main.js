@@ -2,8 +2,11 @@ const { response } = require('express');
 const express = require('express');
 const app = express();
 
+const bodyParser = require('body-parser');
+
 app.listen(8080, () => console.log('Odpalony na 8080'));
 app.use(express.static('data'));
+app.use(bodyParser.json());
 
 class Supplier 
 {
@@ -677,12 +680,15 @@ class Transport
         })
 
         app.post('/newdata', async(req,res) =>{
-            var dane = req.body;
-            const myJSON = JSON.stringify(dane);
-            const test = new Transport;
-            
-            
+            const dane = req.body;
+            console.log(typeof dane);
             console.log(req.body);
+
+
+            
+            const test = new Transport;
+        
+            res.send("ok");
             //const newObject = req.body;
             //req.body.customersAmount;
         })
