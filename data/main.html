@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Zagadnienie pośrednika</title>
+    <style>
+        .button {
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+        }
+        
+        .button1 {background-color: #4CAF50;} /* Green */
+        .button2 {background-color: #008CBA;} /* Blue */
+        </style>
+  </head>
+  <body>
+    <link rel="stylesheet" href="main.css">
+    <p>Dane 1</p>
+
+    <button class="button button1">Green</button>
+    <button class="button button2">Blue</button>
+
+    <div id="aaaaaaaaaaaaa"></div>
+    <label style="color:black">Supp</label>
+    <input id="supp" value="" />
+    <!--
+    <button id="supp_button">Enter</button>
+    <button id="cust_button">Enter</button>
+    -->
+    <div id="aaaaaaaaaaaaa"></div>
+    <label style="color:black">Cust</label>
+    <input id="cust" value="" />
+    
+
+
+    <label style="color:black">Oblicz</label>
+    <input id="Oblicz" value="" />
+    <button id="enter">enter</button>
+
+    <script>
+        const button = document.getElementById('enter');
+
+        button.addEventListener('click', async event => {
+            const supp = document.getElementById('supp').value;
+            console.log("supp" + supp);
+            const cust = document.getElementById('cust').value;
+            const name = document.getElementById('Oblicz').value;
+            console.log("Cust" + cust);
+            const data = {name, supp, cust };
+            console.log(JSON.stringify(data));
+            alert("123");
+            const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+            };
+            const response = await fetch('/newdata', options);
+            const json = await response.json();
+            console.log(json);
+        });
+    </script>
+  </body>
+</html>

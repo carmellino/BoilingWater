@@ -1,0 +1,7 @@
+body{
+    /* margin: 25px; */
+    background-image: url("wideputin.gif");
+    /* object-fit: fill; */
+    overflow: scroll;
+    background-size: cover;
+}
