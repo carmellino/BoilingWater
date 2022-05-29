@@ -43,17 +43,22 @@
       <label style="color:black">Oblicz</label>
       <input id="Oblicz" value="" />
       <button id="enter">enter</button>
+      <button id="bleb">bleb</button>
       <table id="Lable" border="1" cellpadding="2">
       </table>
       <script>
           const button = document.getElementById('enter');
+          const button2 = document.getElementById('bleb');
+          const table = document.getElementById("Lable");
+          console.log(button);
+          var cust,supp;
 
           button.addEventListener('click', async event => {
               console.log('chuj');
-              const cust = document.getElementById('cust').value;
-              const supp = document.getElementById('supp').value;
+              cust = document.getElementById('cust').value;
+              supp = document.getElementById('supp').value;
 
-              var table = document.getElementById("Lable");
+              
               while (table.firstChild) {
                   table.removeChild(table.firstChild);
               }
@@ -98,6 +103,18 @@
               const json = await response.json();
               console.log(json);
           });
+          
+          button2.addEventListener('click', async event =>{
+            console.log('Niewiarygodnie dobrze napisany kod');
+            var table = document.getElementById("Lable");
+            console.log(cust+ "  "+supp);
+            for(var i = -1; i<cust;i++){
+                for(var j = -1;j<supp;j++){
+                    console.log(1);
+                }
+            }
+
+          })
       </script>
 
   </body>
