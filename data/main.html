@@ -21,53 +21,84 @@
         </style>
   </head>
   <body>
-    <link rel="stylesheet" href="main.css">
-    <p>Dane 1</p>
+      <link rel="stylesheet" href="main.css">
+      <p>Dane 1</p>
 
-    <button class="button button1">Green</button>
-    <button class="button button2">Blue</button>
+      <button class="button button1">Green</button>
+      <button class="button button2">Blue</button>
 
-    <div id="aaaaaaaaaaaaa"></div>
-    <label style="color:black">Supp</label>
-    <input type="number" id="supp" value="" />
-    <!--
+      <div id="aaaaaaaaaaaaa"></div>
+      <label style="color:black">Supp</label>
+      <input type="number" id="supp" value="" />
+      <!--
     <button id="supp_button">Enter</button>
     <button id="cust_button">Enter</button>
     -->
-    <div id="aaaaaaaaaaaaa"></div>
-    <label style="color:black">Cust</label>
-    <input type="number" id="cust" value="" />
-    
+      <div id="aaaaaaaaaaaaa"></div>
+      <label style="color:black">Cust</label>
+      <input type="number" id="cust" value="" />
 
 
-    <label style="color:black">Oblicz</label>
-    <input id="Oblicz" value="" />
-    <button id="enter">enter</button>
 
-    <script>
-        const button = document.getElementById('enter');
+      <label style="color:black">Oblicz</label>
+      <input id="Oblicz" value="" />
+      <button id="enter">enter</button>
+      <table id="Lable" border="1" cellpadding="2">
+      </table>
+      <script>
+          const button = document.getElementById('enter');
 
-        button.addEventListener('click', async event => {
-            const supp = document.getElementById('supp').value;
-            console.log("supp" + supp);
-            const cust = document.getElementById('cust').value;
-            const name = document.getElementById('Oblicz').value;
-            console.log("Cust" + cust);
-            const data = {name, supp, cust };
-            console.log(typeof supp);
-            console.log(typeof data);
-            console.log(JSON.stringify(data));
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            };
-            const response = await fetch('/newdata', options);
-            const json = await response.json();
-            console.log(json);
-        });
-    </script>
+          button.addEventListener('click', async event => {
+              console.log('chuj');
+              const cust = document.getElementById('cust').value;
+              const supp = document.getElementById('supp').value;
+
+              var table = document.getElementById("Lable");
+              while (table.firstChild) {
+                  table.removeChild(table.firstChild);
+              }
+
+              for (var i = -1; i < cust; i++) {
+                  var tr = document.createElement('TR');
+                  table.appendChild(tr);
+                  console.log("DUPA1");
+                  for (var j = -1; j < supp; j++) {
+                      console.log("DUPA");
+                      var td = document.createElement('TD');
+                      td.width = '75';
+                      td.id = "cell" + i + "," + j;
+                      var input = document.createElement("INPUT");
+                      input.id = "field" + i + "," + j;
+                      input.value = 0;
+                      input.type = "number";
+                      td.appendChild(input);
+                      console.log(td.id);
+                      tr.appendChild(td);
+                  }
+              }
+              console.log("Jebac");
+              
+              
+              console.log("supp" + supp);
+              
+              const name = document.getElementById('Oblicz').value;
+              console.log("Cust" + cust);
+              const data = { name, supp, cust };
+              console.log(typeof supp);
+              console.log(typeof data);
+              console.log(JSON.stringify(data));
+              const options = {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(data)
+              };
+              const response = await fetch('/newdata', options);
+              const json = await response.json();
+              console.log(json);
+          });
+      </script>
+
   </body>
 </html>
