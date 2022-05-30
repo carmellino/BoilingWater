@@ -610,23 +610,17 @@
               console.log(pod);
               console.log(buy);
               console.log(sell);
-              var trans = new Transport(supp, cust);
-              for (var i = 0; i < x; i++) {
-                  trans.suppliers[i] = new Supplier(i, pod[i], buy[i]);
-              }
-              for (var i = 0; i<y; i++) {
-                  trans.customers[i] = new Customer(i, pop[i], sell[i]);
-              }
-
-              for (var i = 0; i < y; i++) {
-                  trans.transportCost = data;
-              }
-
-              trans.setup();
-              trans.maxMetode();
-              trans.checkIfPositive();
-              trans.goForIt();
-              trans.getFinalGain();
+              var send = [data, pop, pod, buy, sell];
+              const options = {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(send)
+              };
+              const response = await fetch('/liczsie', options);
+              const json = await response.json();
+              console.log(json);
           }
 
           const button = document.getElementById('enter');
