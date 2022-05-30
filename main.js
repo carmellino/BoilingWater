@@ -619,6 +619,17 @@ class Transport
     }
 }
 
+function Play(x, y) {
+    var data =new Array[x];
+    for (var i = 1; i < x + 1; i++) {
+        var tmp = new Array[y];
+        for (var j = 1; j < y + 1; j++) {
+            tmp[j - 1] = document.getElementById("Field" + (i - 1) + ',' + (j - 1)).value;
+        }
+    }
+    console.log(data);
+}
+
 
     console.log("START");
         var supp = 2, cust = 3;

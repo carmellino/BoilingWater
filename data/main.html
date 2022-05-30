@@ -46,7 +46,46 @@
       <button id="bleb">bleb</button>
       <table id="Lable" border="1" cellpadding="2">
       </table>
+      <script type="text/javascript" src="main.js" id="yup"></script>
       <script>
+
+          function Play(x, y) {
+              var data = new Array(x);
+              for (var i = 0; i < x; i++) {
+                  var tmp = new Array(y);
+                  for (var j = 0; j < y; j++) {
+                      console.log("field" + (i - 1) + ',' + (j - 1));
+                      tmp[j] = document.getElementById("field" + (i - 1) + ',' + (j - 1)).value;
+                  }
+                  data[i] = tmp;
+                  delete tmp;
+              }
+              var pop = new Array(y);
+              for (var i = 0; i < y; i++) {
+                  console.log("pop" + "field-2" + ',' + (j - 1));
+                  pop[i] = document.getElementById("field-2" + ',' + (i - 1)).value;
+              }
+              var pod = new Array(x);
+              for (var i = 0; i < x; i++) {
+                  pod[i] = document.getElementById("field" + (i-1) + ',-2').value;
+              }
+              var buy = new Array(x);
+              for (var i = 0; i < x; i++) {
+                  console.log(document.getElementById("field" + (i - 1) + "," + x).value);
+                  buy[i] = document.getElementById("field" + (i - 1) + "," + x).value;
+              }
+              var sell = new Array(y);
+              for (var i = 0; i < y; i++) {
+                  console.log("sellfield" + (y-2) + "," + (i - 1));
+                  sell[i] = document.getElementById("field" + (y - 2) + "," + (i - 1)).value;
+              }
+              console.log(data);
+              console.log(pop);
+              console.log(pod);
+              console.log(buy);
+              console.log(sell);
+          }
+
           const button = document.getElementById('enter');
           const button2 = document.getElementById('bleb');
           const table = document.getElementById("Lable");
@@ -63,11 +102,11 @@
                   table.removeChild(table.firstChild);
               }
 
-              for (var i = -1; i < cust; i++) {
+              for (var i = -2; i < supp; i++) {
                   var tr = document.createElement('TR');
                   table.appendChild(tr);
                   console.log("DUPA1");
-                  for (var j = -1; j < supp; j++) {
+                  for (var j = -2; j < cust; j++) {
                       console.log("DUPA");
                       var td = document.createElement('TD');
                       td.width = '75';
@@ -113,7 +152,7 @@
                     console.log(1);
                 }
             }
-
+            Play(supp, cust);
           })
       </script>
 
