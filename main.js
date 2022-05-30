@@ -109,15 +109,26 @@ class Transport
             for(var i=0;i<this.suppliersAmount; ++i)
             this.transportCost[this.transportCost.length-1][i] = 0;
             
-            for(var i=0;i<this.suppliersAmount; ++i)
-                this.transportCost[i].push(0);
+            for(var i=0;i<this.suppliersAmount; ++i){
+                console.log('Przed push: ');
+                console.log(this.transportCost[i]);
+                (this.transportCost[i]).push(0);
+                console.log('Po pushu: ');
+                console.log(this.transportCost);
+                console.log(typeof this.transportCost);
+            }
+                
             
             this.gains.push([0]);
             for(var i=0;i<this.suppliersAmount; ++i)
                 this.gains[this.gains.length-1][i] = 0;
             
-            for(var i=0;i<this.suppliersAmount; ++i)
+            console.log('---------');
+            for(var i=0;i<this.suppliersAmount; ++i){
                 this.gains[i].push(0);
+                console.log(this.gains[i]);
+            }
+                
         }
     }
 
@@ -682,12 +693,15 @@ function Play(x, y) {
         app.get('/full', async(req,res)=>{
             var bleble = transport;
             const myJSON = JSON.stringify(bleble);
-            console.log(myJSON.customersAmount);
+            //console.log(myJSON.customersAmount);
+            var val = JSON.parse(myJSON).customersAmount; 
+            console.log(val);
+            console.log(myJSON)
             console.log(typeof myJSON);
             res.setHeader('Content-Type', 'application/json');
             res.send(myJSON);
             test = res.body;
-            console.log(test);
+            //console.log(test);
         })
 
         app.post('/newdata', async(req,res) =>{
