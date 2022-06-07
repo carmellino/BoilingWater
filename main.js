@@ -456,40 +456,52 @@ class Transport
         this.setPath();
         if(this.path[0][0] == -1)
             return;
-            this.relocate();
-            this.calculateAlfasAndBetas();
-            this.calculateDeltas();
+        this.relocate();
+        this.calculateAlfasAndBetas();
+        this.calculateDeltas();
     }
-
+    ehhhh()
+    {
+        this.everyIteration[this.a]=[];
+        for(var i=0;i<this.suppliersAmount; ++i)
+        {
+                this.everyIteration[this.a][i] = [...this.deals[i]];
+        }
+        this.a = this.a+1;
+    }
     goForIt()
     {
         while(this.checkIfPositive())
         {
-            
             this.change();
-            console.log('test');
-            this.printDeals();
-            this.printDeltas();
-            this.printBase();
-            this.everyIteration.push(this.deals);
+            //this.everyIteration.push(this.deals);
+            this.ehhhh();
             this.printEvery();
+            console.log('test');
+            //this.printDeals();
+            // this.printDeltas();
+            // this.printBase();   
             if(this.path[0][0] == -1)
                 return;
-            
-            
         }
     }
 
+    
     setup()
     {
         this.calculateDemand();
         this.calculateSupply();
         this.calculateGains();
         this.getFictional();
+        this.a = 0;
+        
     }
 
     firstTime()
     {
+        // this.everyIteration.push(this.deals);
+        this.ehhhh();
+        this.printEvery();
         this.initAlfasAndBetas();
         this.calculateAlfasAndBetas();
 
@@ -624,6 +636,7 @@ class Transport
 
     printEvery()
     {
+        console.log("\nEVERY")
         for(var i=0; i<this.everyIteration.length; ++i)
         {
             for(var j=0; j<this.suppliersAmount; ++j)

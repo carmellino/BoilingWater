@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.lang.model.util.ElementScanner6;
+
 public class Transport 
 {
     int suppliersAmount, customersAmount;
@@ -279,6 +281,8 @@ public class Transport
             for(int j=0;j<customersAmount; ++j)
                 if(deals[i][j] != 0)
                     base[i][j] = true;
+                else
+                    base[i][j] = false;
     }
 
     void initDeltasArr()
@@ -311,7 +315,6 @@ public class Transport
 
     void findAndSetMaxDelta()
     {
-        
         double max = 0;
         int maxI = -1, maxJ = -1;
         boolean inList = false;
@@ -420,6 +423,8 @@ public class Transport
             printDeltas();
             printBase();
             everyIteration.add(deals);
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa");
+            printEvery();
         }
     }
 
@@ -430,7 +435,6 @@ public class Transport
         calculateGains();
         getFictional();
     }
-
 
     void firstTime()
     {
@@ -564,5 +568,21 @@ public class Transport
         for(int i=0;i<4;++i)
             System.out.println(path[i][0] + "\t" + path[i][1]);
             System.out.println();
+    }
+
+    void printEvery()
+    {
+        for(int i=0; i<everyIteration.size(); ++i)
+        {
+            for(int j=0; j<suppliersAmount; ++j)
+            {
+                for(int k=0; k<customersAmount; ++k)
+                {
+                    System.out.print(everyIteration.get(i)[j][k] + "\t");
+                }
+                System.out.println();
+            }
+        }
+        System.out.println();
     }
 }

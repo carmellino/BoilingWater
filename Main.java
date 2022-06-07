@@ -38,7 +38,7 @@ public class Main
         // transport.printDeals();
         // transport.printCustomers();
         // transport.printSuppliers();
-
+        transport.printDeals();
         transport.firstTime();
         
         //transport.printAlfasAndBetas();
@@ -56,8 +56,12 @@ public class Main
         //transport.setPath();
         //transport.printPath();
         //transport.printDeals();
+        transport.printDeals();
         transport.goForIt();
         transport.getFinalGain();
-        
+        transport.printDeals();
+        transport.printDeltas();
+        transport.printGainArr();;
+        transport.printTransportCosts();
     }
 }
