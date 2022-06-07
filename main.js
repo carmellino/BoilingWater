@@ -106,18 +106,24 @@ class Transport
                 this.customers.push(new Customer(this.customersAmount-1, 0,0));
             }
             this.transportCost.push([0]);
-            for(var i=0;i<this.suppliersAmount; ++i)
-            this.transportCost[this.transportCost.length-1][i] = 0;
-            
-            for(var i=0;i<this.suppliersAmount; ++i){
+
+            for(var i=0;i<this.customersAmount-1; ++i){
+                console.log("bleble" + " " +this.customersAmount);
                 console.log('Przed push: ');
                 console.log(this.transportCost[i]);
-                this.transportCost[i].push(0);
+                this.transportCost[this.suppliersAmount-1][i]=0;
                 console.log('Po pushu: ');
                 console.log(this.transportCost);
                 console.log(typeof this.transportCost);
             }
-                
+
+            for(var i=0;i<this.suppliersAmount; ++i)
+            this.transportCost[this.transportCost.length-1][i] = 0;
+            
+            
+            for(var i=0;i<this.suppliersAmount; ++i){
+                this.transportCost[i].push(0);
+            }
             
             this.gains.push([0]);
             for(var i=0;i<this.suppliersAmount; ++i)
@@ -145,10 +151,13 @@ class Transport
     {
         var finalGain = 0;
         for(var i=0;i<this.suppliersAmount; ++i)
-            for(var j=0;j<this.customersAmount; ++j)
+            for(var j=0;j<this.customersAmount; ++j){
                 finalGain += this.deals[i][j] * this.gains[i][j];
+            }
+                
 
         console.log("FinalGain: " + finalGain);
+        
         return finalGain;
     }
     
@@ -657,6 +666,10 @@ function Play(x, y) {
         console.log("Pre:\n");
         console.log(transport);
 
+        console.log("_________TYPE:_________");
+        console.log(typeof transport.transportCost);
+        console.log(typeof transport.transportCost[0]);
+        console.log(typeof transport.transportCost[0][0]);
 
         transport.setup();
         // transport.printCustomers();
@@ -672,6 +685,8 @@ function Play(x, y) {
         transport.printTransportCosts();
         console.log('------------');
         transport.printDeltas();
+
+        console.log(transport);
         
 
         app.get('/dane', async (req,res) =>{
@@ -716,9 +731,9 @@ function Play(x, y) {
             console.log(typeof dane);
             console.log(req.body);
 
-            var supp_val = req.body.supp;
-            var cust_val = req.body.cust;
-            var name_val = req.body.name;
+            var supp_val = parseInt(req.body.supp);
+            var cust_val = parseInt(req.body.cust);
+            var name_val = parseInt(req.body.name);
 
             var transport = new Transport(supp_val, cust_val);
             var nazwa = req.body.name;
@@ -740,6 +755,10 @@ function Play(x, y) {
 
 
             var data_val = req.body.data;
+            console.log("_________TYPE:_________");
+            console.log(typeof data_val);
+            console.log(typeof data_val[0]);
+            console.log(typeof parseInt(data_val[0][0]));
             //console.log(data_val[0]);
             //console.log(data_val[0][0]);
             //console.log(data_val[1]);
@@ -753,27 +772,32 @@ function Play(x, y) {
             console.log("data: " + data_val+ " pop: "+ pop_val+ " pod: "+ pod_val + " buy: " + buy_val + " sell: " + sell_val);
             
 
-            const transport = new Transport(supp_val,cust_val);
+            const transport = new Transport(parseInt(supp_val),parseInt(cust_val));
 
            // console.log("Długość: " + data_val.length); //daje 2
            // console.log("Długość: " + data_val[0].length); //daje 3
            
            
             for(var i = 0;i<supp_val;i++){
-                transport.suppliers[i] = new Supplier(i, pod_val[i], buy_val[i]);
+                transport.suppliers[i] = new Supplier(i, parseInt(pod_val[i]), parseInt(buy_val[i]));
                 transport.transportCost[i] = [];
                 for(var j=0;j<data_val[0].length;j++){
-                    transport.transportCost[i].push(data_val[i][j]);
+                    transport.transportCost[i].push(parseInt(data_val[i][j]));
                     console.log(j);
                 }                
             }
             
             for(var i = 0;i<cust_val;i++){
                 console.log(i);
-                transport.customers[i] = new Customer(i, pop_val[i], sell_val[i]);
+                transport.customers[i] = new Customer(i, parseInt(pop_val[i]), parseInt(sell_val[i]));
             }
+            console.log("-------------------");
+            console.log(transport);
+
+
+
             transport.setup();
-            transport.maxMetode;
+            transport.maxMetode();
             transport.firstTime();
             console.log(transport.checkIfPositive());
             transport.goForIt();
@@ -782,7 +806,7 @@ function Play(x, y) {
             console.log(myJSON);
             console.log(transport);
 
-            //res.json(myJSON);
+            res.json(myJSON);
             //const newObject = req.body;
             //req.body.customersAmount;
         })
