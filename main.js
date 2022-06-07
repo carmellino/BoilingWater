@@ -112,7 +112,7 @@ class Transport
             for(var i=0;i<this.suppliersAmount; ++i){
                 console.log('Przed push: ');
                 console.log(this.transportCost[i]);
-                (this.transportCost[i]).push(0);
+                this.transportCost[i].push(0);
                 console.log('Po pushu: ');
                 console.log(this.transportCost);
                 console.log(typeof this.transportCost);
@@ -654,6 +654,9 @@ function Play(x, y) {
 
         transport.transportCost[0] = [8,14,17];
         transport.transportCost[1] = [12,9,19];
+        console.log("Pre:\n");
+        console.log(transport);
+
 
         transport.setup();
         // transport.printCustomers();
@@ -694,14 +697,18 @@ function Play(x, y) {
             var bleble = transport;
             const myJSON = JSON.stringify(bleble);
             //console.log(myJSON.customersAmount);
+
+
             var val = JSON.parse(myJSON).customersAmount; 
-            console.log(val);
-            console.log(myJSON)
-            console.log(typeof myJSON);
+            console.log("Ilość customerów: " + val);
+            console.log("Całe dane pliku JSON: " + myJSON);
+            console.log("Typ pliku JSON: " + typeof myJSON);
             res.setHeader('Content-Type', 'application/json');
             res.send(myJSON);
             test = res.body;
             //console.log(test);
+
+
         })
 
         app.post('/newdata', async(req,res) =>{
@@ -709,17 +716,78 @@ function Play(x, y) {
             console.log(typeof dane);
             console.log(req.body);
 
+            var supp_val = req.body.supp;
+            var cust_val = req.body.cust;
+            var name_val = req.body.name;
 
-            
-            const test = new Transport;
+            var transport = new Transport(supp_val, cust_val);
+            var nazwa = req.body.name;
+            console.log("Name: "+ name_val + " Supp: " + supp_val + " Cust: " + cust_val);
+
+            const myJSON = JSON.stringify(transport);
+            console.log(myJSON);
+
         
-            res.send("ok");
+            res.json(myJSON);
+            //const newObject = req.body;
+            //req.body.customersAmount;
+        })
+
+        app.post('/liczsie', async(req,res) =>{
+            const dane = req.body;
+            console.log(typeof dane);
+            console.log(req.body);
+
+
+            var data_val = req.body.data;
+            //console.log(data_val[0]);
+            //console.log(data_val[0][0]);
+            //console.log(data_val[1]);
+            var pop_val = req.body.pop;
+            var pod_val = req.body.pod;
+            var buy_val = req.body.buy;
+            var sell_val = req.body.sell;
+            var supp_val = req.body.supp;
+            var cust_val = req.body.cust;
+
+            console.log("data: " + data_val+ " pop: "+ pop_val+ " pod: "+ pod_val + " buy: " + buy_val + " sell: " + sell_val);
+            
+
+            const transport = new Transport(supp_val,cust_val);
+
+           // console.log("Długość: " + data_val.length); //daje 2
+           // console.log("Długość: " + data_val[0].length); //daje 3
+           
+           
+            for(var i = 0;i<supp_val;i++){
+                transport.suppliers[i] = new Supplier(i, pod_val[i], buy_val[i]);
+                transport.transportCost[i] = [];
+                for(var j=0;j<data_val[0].length;j++){
+                    transport.transportCost[i].push(data_val[i][j]);
+                    console.log(j);
+                }                
+            }
+            
+            for(var i = 0;i<cust_val;i++){
+                console.log(i);
+                transport.customers[i] = new Customer(i, pop_val[i], sell_val[i]);
+            }
+            transport.setup();
+            transport.maxMetode;
+            transport.firstTime();
+            console.log(transport.checkIfPositive());
+            transport.goForIt();
+            transport.getFinalGain();
+            const myJSON = JSON.stringify(transport);
+            console.log(myJSON);
+            console.log(transport);
+
+            //res.json(myJSON);
             //const newObject = req.body;
             //req.body.customersAmount;
         })
 
         app.get('/', (req,res)=>{
-            res.sendFile(__dirname+"/data/main.html");
-            
+            res.sendFile(__dirname+"/data/main.html");            
         });
 

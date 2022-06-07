@@ -46,7 +46,6 @@
       <button id="bleb">bleb</button>
       <table id="Lable" border="1" cellpadding="2">
       </table>
-      <script type="text/javascript" src="main.js" id="yup"></script>
       <script>
           class Supplier {
               constructor(a, b, c) {
@@ -575,7 +574,7 @@
           }
 
 
-          function Play(x, y) {
+          async function Play(x, y) {
               var data = new Array(x);
               for (var i = 0; i < x; i++) {
                   var tmp = new Array(y);
@@ -610,7 +609,11 @@
               console.log(pod);
               console.log(buy);
               console.log(sell);
-              var send = [data, pop, pod, buy, sell];
+              console.log(supp);
+              console.log(cust);
+              var send = {data,pop,pod,buy,sell,supp,cust};
+              console.log(JSON.stringify(send));
+              console.log(typeof send);
               const options = {
                   method: 'POST',
                   headers: {
@@ -658,14 +661,10 @@
                   }
               }
               console.log("Jebac");
-              
-              
-              console.log("supp" + supp);
+            
               
               const name = document.getElementById('Oblicz').value;
-              console.log("Cust" + cust);
-              const data = { name, supp, cust };
-              console.log(typeof supp);
+              const data = {name,supp,cust};
               console.log(typeof data);
               console.log(JSON.stringify(data));
               const options = {
@@ -677,6 +676,7 @@
               };
               const response = await fetch('/newdata', options);
               const json = await response.json();
+              console.log(typeof json);
               console.log(json);
           });
           
