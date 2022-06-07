@@ -72,6 +72,7 @@ class Transport
         this.betas = [];
         this.checked = [];
         this.everyIteration =[];
+        this.a=0;
     }
 
     calculateSupply()
@@ -493,7 +494,7 @@ class Transport
         this.calculateSupply();
         this.calculateGains();
         this.getFictional();
-        this.a = 0;
+        //this.a = 0;
         
     }
 
