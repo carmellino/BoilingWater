@@ -21,9 +21,9 @@
         </style>
   </head>
   <body>
-    <header class="w3-container w3-center w3-padding-32"> 
-        <h1><b>Zagadnienie pośrednika</b></h1>
-    </header>
+      <header class="w3-container w3-center w3-padding-32">
+          <h1><b>Zagadnienie pośrednika</b></h1>
+      </header>
       <link rel="stylesheet" href="main.css">
       <p>Dane 1</p>
 
@@ -42,13 +42,21 @@
       <input type="number" id="cust" value="" />
 
 
-
       <label style="color:black">Oblicz</label>
       <input id="Oblicz" value="" />
       <button id="enter">enter</button>
       <button id="bleb">bleb</button>
       <table id="Lable" border="1" cellpadding="2"></table>
+      <label id="jednostkowe"></label>
+      <table id="zyskJednostkowy" border="1" cellpadding="2"></table>
+      <label id="ilosci"></label>
       <table id="everyIteration" border="1" cellpadding="2"></table>
+      <label id="gainField"></label>
+      <form id="choseIter">
+          <select id="pointer">
+              <option disabled selected value>Iteracja</option>
+          </select>
+      </form>
       <script>
           class Supplier {
               constructor(a, b, c) {
@@ -104,7 +112,7 @@
                   this.betas = [];
                   this.checked = [];
                   this.everyIteration = [];
-                  this.a=0;
+                  this.a = 0;
               }
 
               calculateSupply() {
@@ -122,7 +130,7 @@
               getFictional() {
                   if (this.supply != this.demand) {
                       this.suppliersAmount = this.suppliersAmount + 1;
-                      this.customersAmount = this.customersAmount+ 1;
+                      this.customersAmount = this.customersAmount + 1;
 
                       if (this.supply > this.demand) {
                           this.suppliers.push(new Supplier(this.suppliersAmount - 1, 0, 0));
@@ -134,9 +142,9 @@
                       }
                       this.transportCost.push([0]);
                       for (var i = 0; i < this.suppliersAmount; i++)
-                          this.transportCost[this.transportCost.length-1][i] = 0;
+                          this.transportCost[this.transportCost.length - 1][i] = 0;
 
-                      for (var i = 0; i < this.customersAmount; i++){
+                      for (var i = 0; i < this.customersAmount; i++) {
                           console.log(this.transportCost);
                           console.log(typeof this.transportCost);
                           this.transportCost[i].push(0);
@@ -144,7 +152,7 @@
                           //console.log(typeof this.transportCost[i]);
 
                       }
-                          
+
 
                       this.gains.push([0]);
                       for (var i = 0; i < this.suppliersAmount; i++)
@@ -595,7 +603,7 @@
               }
               var pod = new Array(x);
               for (var i = 0; i < x; i++) {
-                  pod[i] = document.getElementById("field" + (i-1) + ',-2').value;
+                  pod[i] = document.getElementById("field" + (i - 1) + ',-2').value;
               }
               var buy = new Array(x);
               for (var i = 0; i < x; i++) {
@@ -604,7 +612,7 @@
               }
               var sell = new Array(y);
               for (var i = 0; i < y; i++) {
-                  console.log("sellfield" + (y-2) + "," + (i - 1));
+                  console.log("sellfield" + (y - 2) + "," + (i - 1));
                   sell[i] = document.getElementById("field" + (y - 2) + "," + (i - 1)).value;
               }
               console.log(data);
@@ -614,7 +622,7 @@
               console.log(sell);
               console.log(supp);
               console.log(cust);
-              var send = {data,pop,pod,buy,sell,supp,cust};
+              var send = { data, pop, pod, buy, sell, supp, cust };
               console.log(JSON.stringify(send));
               console.log(typeof send);
               const options = {
@@ -636,42 +644,88 @@
               console.log(typeof bleble.everyIteration);
               console.log(bleble);
 
+              var t = document.createTextNode("Tablica ilosciowa");
+              var item = document.getElementById("ilosci");
+              item.appendChild(t);
 
+              var tableI = document.getElementById("zyskJednostkowy");
+              while (tableI.firstChild) {
+                  tableI.removeChild(tableI.firstChild);
+              }
+              for (var i = 0; i < bleble.gains.length; i++) {
+                  console.log(i);
+                  var tr = document.createElement('tr');
+                  tableI.appendChild(tr);
+                  for (var j = 0; j < bleble.gains[0].length; j++) {
+                      console.log(j);
+                      var td = document.createElement('td');
+                      td.width = '140';
+                      td.height = '100';
+                      td.id = "cell" + i + "," + j;
+                      console.log("cell value");
+                      console.log(bleble.gains[i][j]);
+                      var text = document.createTextNode(bleble.gains[i][j]);
+                      td.appendChild(text);
+                      console.log(td.value);
+                      tr.appendChild(td);
+                      console.log(td.id);
+                  }
+              }
+
+              var t = document.createTextNode("Tablica zyskow jednostkowych");
+              var item = document.getElementById("jednostkowe");
+              item.appendChild(t);
 
               var tableIteration = document.getElementById("everyIteration");
-              while (tableIteration.firstChild){
-                tableIteration.removeChild(tableIteration.firstChild);
+              while (tableIteration.firstChild) {
+                  tableIteration.removeChild(tableIteration.firstChild);
               }
-              for(var i=0;i<bleble.everyIteration[0].length;i++){
-                console.log(i);
-                var tr = document.createElement('tr');
-                tableIteration.appendChild(tr);
-                for(var j=0;j<bleble.everyIteration[0][0].length;j++){
-                    console.log(j);
-                    var td = document.createElement('td');
-                    td.width='140';
-                    td.height='100';
-                    td.id = "cell"+i+","+j;
-                    td.abbr = bleble.everyIteration[0][i][j];
-                    console.log(td.value);
-                    tr.appendChild(td);
-                    console.log(td.id);
-                }
+              for (var i = 0; i < bleble.everyIteration[0].length; i++) {
+                  console.log(i);
+                  var tr = document.createElement('tr');
+                  tableIteration.appendChild(tr);
+                  for (var j = 0; j < bleble.everyIteration[0][0].length; j++) {
+                      console.log(j);
+                      var td = document.createElement('td');
+                      td.width = '140';
+                      td.height = '100';
+                      td.id = "cell" + i + "," + j;
+                      console.log("cell value");
+                      console.log(bleble.everyIteration[0][i][j]);
+                      var text = document.createTextNode(bleble.everyIteration[0][i][j]);
+                      td.appendChild(text);
+                      console.log(td.value);
+                      tr.appendChild(td);
+                      console.log(td.id);
+                  }
               }
-              
+              var describtion = document.createTextNode("Final Gain in this iteration : ");
+              var GainField = document.createTextNode(bleble.gainFinal);
+              var field = document.getElementById("gainField");
+              field.appendChild(describtion);
+              field.appendChild(GainField);
+              var opt = document.createElement('option');
+              for (var i = 1; i <= bleble.a; i++) {
+                  opt.value = i;
+                  opt.innerText = i;
+                  var pol = document.getElementById("pointer");
+                  pointer.appendChild(opt);
+              }
+
+
           }
 
           const button = document.getElementById('enter');
           const button2 = document.getElementById('bleb');
           const table = document.getElementById("Lable");
           console.log(button);
-          var cust,supp;
+          var cust, supp;
 
           button.addEventListener('click', async event => {
               cust = document.getElementById('cust').value;
               supp = document.getElementById('supp').value;
 
-              
+
               while (table.firstChild) {
                   table.removeChild(table.firstChild);
               }
@@ -687,45 +741,45 @@
                       input.id = "field" + i + "," + j;
                       //input.value = 0;
                       input.type = "number";
-                      if((i==supp-1&&j==cust-1) || (i==-2&&j==-2) || (i==-2&&j==cust-1) || (i==supp-1&&j==-2)){
-                        input.type = "hidden";
-                        td.bgColor = "white";
+                      if ((i == supp - 1 && j == cust - 1) || (i == -2 && j == -2) || (i == -2 && j == cust - 1) || (i == supp - 1 && j == -2)) {
+                          input.type = "hidden";
+                          td.bgColor = "white";
                       }
-                      if((i>-2 &&i<supp-1) &&(j>-2 && j<cust-1)){
-                        td.bgColor="yellow";
-                        input.placeholder = "Koszty transportu";
-                        input.placeholder.color = "gray";
+                      if ((i > -2 && i < supp - 1) && (j > -2 && j < cust - 1)) {
+                          td.bgColor = "yellow";
+                          input.placeholder = "Koszty transportu";
+                          input.placeholder.color = "gray";
                       }
-                      if(i==-2&& (j>-2 &&j<cust-1)){
-                        td.bgColor = "Red";
-                        input.placeholder = "Popyt";
-                        input.placeholder.color = "gray";
+                      if (i == -2 && (j > -2 && j < cust - 1)) {
+                          td.bgColor = "Red";
+                          input.placeholder = "Popyt";
+                          input.placeholder.color = "gray";
                       }
-                      if(i==supp-1&& (j>-2 &&j<cust-1)){
-                        td.bgColor = "Red";
-                        input.placeholder = "Ceny sprzedaży";
-                        input.placeholder.color = "gray";
+                      if (i == supp - 1 && (j > -2 && j < cust - 1)) {
+                          td.bgColor = "Red";
+                          input.placeholder = "Ceny sprzedaży";
+                          input.placeholder.color = "gray";
                       }
-                      if((i>-2&&i<supp-1)&&j==-2){
-                        td.bgColor = "Red";
-                        input.placeholder = "Podaż";
-                        input.placeholder.color = "gray";
+                      if ((i > -2 && i < supp - 1) && j == -2) {
+                          td.bgColor = "Red";
+                          input.placeholder = "Podaż";
+                          input.placeholder.color = "gray";
                       }
-                      if((i>-2&&i<supp-1)&&j==cust-1){
-                        td.bgColor = "Red";
-                        input.placeholder = "Koszty zakupu";
-                        input.placeholder.color = "gray";
+                      if ((i > -2 && i < supp - 1) && j == cust - 1) {
+                          td.bgColor = "Red";
+                          input.placeholder = "Koszty zakupu";
+                          input.placeholder.color = "gray";
                       }
                       td.appendChild(input);
                       console.log(td.id);
                       tr.appendChild(td);
-                      
+
                   }
               }
-            
-              
+
+
               const name = document.getElementById('Oblicz').value;
-              const data = {name,supp,cust};
+              const data = { name, supp, cust };
               console.log(typeof data);
               console.log(JSON.stringify(data));
               const options = {
@@ -740,19 +794,19 @@
               console.log(typeof json);
               console.log(json);
 
-              
+
           });
-          
-          button2.addEventListener('click', async event =>{
-            console.log('Niewiarygodnie dobrze napisany kod');
-            var table = document.getElementById("Lable");
-            console.log(cust+ "  "+supp);
-            for(var i = -1; i<cust;i++){
-                for(var j = -1;j<supp;j++){
-                    console.log(1);
-                }
-            }
-            Play(supp, cust);
+
+          button2.addEventListener('click', async event => {
+              console.log('Niewiarygodnie dobrze napisany kod');
+              var table = document.getElementById("Lable");
+              console.log(cust + "  " + supp);
+              for (var i = -1; i < cust; i++) {
+                  for (var j = -1; j < supp; j++) {
+                      console.log(1);
+                  }
+              }
+              Play(supp, cust);
           })
       </script>
 

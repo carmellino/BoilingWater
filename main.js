@@ -51,7 +51,8 @@ class Transport
         this.customers = [];
         this.transportCost = [];
         this.gains = [];
-        this.path=[];
+        this.path = [];
+        this.gainFinal = 0;
         for(var i=0;i<4;++i)
         {
             this.path[i] = [-1, -1];
@@ -158,7 +159,7 @@ class Transport
                 
 
         console.log("FinalGain: " + finalGain);
-        
+        this.gainFinal = finalGain;
         return finalGain;
     }
     
