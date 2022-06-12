@@ -21,6 +21,9 @@
         </style>
   </head>
   <body>
+    <header class="w3-container w3-center w3-padding-32"> 
+        <h1><b>Zagadnienie pośrednika</b></h1>
+    </header>
       <link rel="stylesheet" href="main.css">
       <p>Dane 1</p>
 
@@ -28,14 +31,14 @@
       <button class="button button2">Blue</button>
 
       <div id="aaaaaaaaaaaaa"></div>
-      <label style="color:black">Supp</label>
+      <label style="color:black">Ilość dostawców</label>
       <input type="number" id="supp" value="" />
       <!--
     <button id="supp_button">Enter</button>
     <button id="cust_button">Enter</button>
     -->
       <div id="aaaaaaaaaaaaa"></div>
-      <label style="color:black">Cust</label>
+      <label style="color:black">Ilość odbiorców</label>
       <input type="number" id="cust" value="" />
 
 
@@ -44,8 +47,8 @@
       <input id="Oblicz" value="" />
       <button id="enter">enter</button>
       <button id="bleb">bleb</button>
-      <table id="Lable" border="1" cellpadding="2">
-      </table>
+      <table id="Lable" border="1" cellpadding="2"></table>
+      <table id="everyIteration" border="1" cellpadding="2"></table>
       <script>
           class Supplier {
               constructor(a, b, c) {
@@ -101,6 +104,7 @@
                   this.betas = [];
                   this.checked = [];
                   this.everyIteration = [];
+                  this.a=0;
               }
 
               calculateSupply() {
@@ -573,7 +577,6 @@
               }
           }
 
-
           async function Play(x, y) {
               var data = new Array(x);
               for (var i = 0; i < x; i++) {
@@ -624,6 +627,38 @@
               const response = await fetch('/liczsie', options);
               const json = await response.json();
               console.log(json);
+              var bleble = JSON.parse(json);
+              var aaa = bleble.everyIteration;
+              console.log(bleble.everyIteration);
+              console.log(bleble.everyIteration[0]);
+              console.log(bleble.everyIteration[0][0]);
+              console.log(bleble.everyIteration[0][0][0]);
+              console.log(typeof bleble.everyIteration);
+              console.log(bleble);
+
+
+
+              var tableIteration = document.getElementById("everyIteration");
+              while (tableIteration.firstChild){
+                tableIteration.removeChild(tableIteration.firstChild);
+              }
+              for(var i=0;i<bleble.everyIteration[0].length;i++){
+                console.log(i);
+                var tr = document.createElement('tr');
+                tableIteration.appendChild(tr);
+                for(var j=0;j<bleble.everyIteration[0][0].length;j++){
+                    console.log(j);
+                    var td = document.createElement('td');
+                    td.width='140';
+                    td.height='100';
+                    td.id = "cell"+i+","+j;
+                    td.abbr = bleble.everyIteration[0][i][j];
+                    console.log(td.value);
+                    tr.appendChild(td);
+                    console.log(td.id);
+                }
+              }
+              
           }
 
           const button = document.getElementById('enter');
@@ -633,7 +668,6 @@
           var cust,supp;
 
           button.addEventListener('click', async event => {
-              console.log('chuj');
               cust = document.getElementById('cust').value;
               supp = document.getElementById('supp').value;
 
@@ -645,22 +679,49 @@
               for (var i = -2; i < supp; i++) {
                   var tr = document.createElement('TR');
                   table.appendChild(tr);
-                  console.log("DUPA1");
                   for (var j = -2; j < cust; j++) {
-                      console.log("DUPA");
                       var td = document.createElement('TD');
-                      td.width = '75';
-                      td.id = "cell" + i + "," + j;
+                      td.width = '35';
+                      td.id = "cell " + i + " , " + j;
                       var input = document.createElement("INPUT");
                       input.id = "field" + i + "," + j;
-                      input.value = 0;
+                      //input.value = 0;
                       input.type = "number";
+                      if((i==supp-1&&j==cust-1) || (i==-2&&j==-2) || (i==-2&&j==cust-1) || (i==supp-1&&j==-2)){
+                        input.type = "hidden";
+                        td.bgColor = "white";
+                      }
+                      if((i>-2 &&i<supp-1) &&(j>-2 && j<cust-1)){
+                        td.bgColor="yellow";
+                        input.placeholder = "Koszty transportu";
+                        input.placeholder.color = "gray";
+                      }
+                      if(i==-2&& (j>-2 &&j<cust-1)){
+                        td.bgColor = "Red";
+                        input.placeholder = "Popyt";
+                        input.placeholder.color = "gray";
+                      }
+                      if(i==supp-1&& (j>-2 &&j<cust-1)){
+                        td.bgColor = "Red";
+                        input.placeholder = "Ceny sprzedaży";
+                        input.placeholder.color = "gray";
+                      }
+                      if((i>-2&&i<supp-1)&&j==-2){
+                        td.bgColor = "Red";
+                        input.placeholder = "Podaż";
+                        input.placeholder.color = "gray";
+                      }
+                      if((i>-2&&i<supp-1)&&j==cust-1){
+                        td.bgColor = "Red";
+                        input.placeholder = "Koszty zakupu";
+                        input.placeholder.color = "gray";
+                      }
                       td.appendChild(input);
                       console.log(td.id);
                       tr.appendChild(td);
+                      
                   }
               }
-              console.log("Jebac");
             
               
               const name = document.getElementById('Oblicz').value;
@@ -678,6 +739,8 @@
               const json = await response.json();
               console.log(typeof json);
               console.log(json);
+
+              
           });
           
           button2.addEventListener('click', async event =>{
