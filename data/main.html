@@ -587,6 +587,8 @@
               }
           }
 
+          var gainArr = [];
+
           async function Play(x, y) {
               var data = new Array(x);
               for (var i = 0; i < x; i++) {
@@ -638,6 +640,7 @@
               const json = await response.json();
               console.log(json);
               bleble = JSON.parse(json);
+              gainArr = bleble.gainArr;
               var aaa = bleble.everyIteration;
               console.log(bleble.everyIteration);
               console.log(bleble.everyIteration[0]);
@@ -863,6 +866,8 @@
                       console.log(td.id);
                   }
               }
+              var text = document.getElementById("gainField");
+              text.textContent = "Final Gain in this iteration : " + gainArr[c - 1];
           })
       </script>
 
