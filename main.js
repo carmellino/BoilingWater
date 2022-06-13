@@ -350,7 +350,7 @@ class Transport
         for(var i=0;i<this.suppliersAmount; ++i)
             for(var j=0;j<this.customersAmount; ++j)
                 if(!this.base[i][j])
-                    this.deltas[i][j] = this.transportCost[i][j] - this.alfas[i] - this.betas[j];
+                    this.deltas[i][j] = this.gains[i][j] - this.alfas[i] - this.betas[j];
                 else
                     this.deltas[i][j] = 0;
     }
@@ -399,22 +399,17 @@ class Transport
         this.findAndSetMaxDelta();
         while( this.path[0][0] != -1 )
         {
-            //console.log('siema');
             for(var i=0;i<this.suppliersAmount; ++i)
             {
-                //console.log('siema1');
                 if(this.base[i][this.path[0][1]] && i != this.path[0][0])
                 {
-                    //console.log('siema2');
                     for(var j=0;j<this.customersAmount; ++j)
                     {
-                        //console.log('siema3');
                         if(this.base[i][j] && j != this.path[0][1])
                         {
-                            //console.log('siema4');
                             if(this.base[this.path[0][0]][j])
                             {
-                                //console.log('siema5');
+
                                 this.path[1] = [i,this.path[0][1]];
                                 this.path[2] = [i, j];
                                 this.path[3] = [this.path[0][0],j];
@@ -425,7 +420,6 @@ class Transport
                     }
                 }
             }
-            console.log('teststbta');
             this.findAndSetMaxDelta();
             this.printBase();
         }
@@ -500,17 +494,13 @@ class Transport
         while(this.checkIfPositive())
         {
             this.change();
-            //this.everyIteration.push(this.deals);
-            this.ehhhh();
-            //this.printEvery();
+            
             console.log('test');
-            //this.printDeals();
-            // this.printDeltas();
-            // this.printBase();   
             if(this.path[0][0] == -1)
                 return;
             if(this.meh())
                 return;
+            this.ehhhh();
         }
     }
 
