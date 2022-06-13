@@ -53,6 +53,7 @@ class Transport
         this.gains = [];
         this.path = [];
         this.gainFinal = 0;
+        this.gainArr = [];
         for(var i=0;i<4;++i)
         {
             this.path[i] = [-1, -1];
@@ -467,9 +468,10 @@ class Transport
         this.everyIteration[this.a]=[];
         for(var i=0;i<this.suppliersAmount; ++i)
         {
-                this.everyIteration[this.a][i] = [...this.deals[i]];
+            this.everyIteration[this.a][i] = [...this.deals[i]];
         }
-        this.a = this.a+1;
+        this.gainArr.push(this.getFinalGain());
+        this.a = this.a + 1;
     }
     goForIt()
     {

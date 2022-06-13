@@ -54,10 +54,12 @@
       <label id="gainField"></label>
       <form id="choseIter">
           <select id="pointer">
-              <option disabled selected value>Iteracja</option>
+              <option disabled selected value id="xd">Iteracja</option>
           </select>
       </form>
+      <button id="select">Select</button>
       <script>
+          var bleble;
           class Supplier {
               constructor(a, b, c) {
                   this.id = a;
@@ -635,7 +637,7 @@
               const response = await fetch('/liczsie', options);
               const json = await response.json();
               console.log(json);
-              var bleble = JSON.parse(json);
+              bleble = JSON.parse(json);
               var aaa = bleble.everyIteration;
               console.log(bleble.everyIteration);
               console.log(bleble.everyIteration[0]);
@@ -644,8 +646,11 @@
               console.log(typeof bleble.everyIteration);
               console.log(bleble);
 
-              var t = document.createTextNode("Tablica ilosciowa");
-              var item = document.getElementById("ilosci");
+
+              var t = document.createTextNode("Tablica zyskow jednostkowych");
+              var item = document.getElementById("jednostkowe");
+              while (item.firstChild)
+                  item.removeChild(item.firstChild);
               item.appendChild(t);
 
               var tableI = document.getElementById("zyskJednostkowy");
@@ -672,8 +677,11 @@
                   }
               }
 
-              var t = document.createTextNode("Tablica zyskow jednostkowych");
-              var item = document.getElementById("jednostkowe");
+
+              var t = document.createTextNode("Tablica ilosciowa");
+              var item = document.getElementById("ilosci");
+              while(item.firstChild)
+                item.removeChild(item.firstChild);
               item.appendChild(t);
 
               var tableIteration = document.getElementById("everyIteration");
@@ -700,12 +708,22 @@
                   }
               }
               var describtion = document.createTextNode("Final Gain in this iteration : ");
-              var GainField = document.createTextNode(bleble.gainFinal);
+              var GainField = document.createTextNode(Number(bleble.gainFinal));
               var field = document.getElementById("gainField");
+              while (field.firstChild) {
+                  if (field.lastChild.id!="xd")
+                  field.removeChild(field.lastChild);
+              }
               field.appendChild(describtion);
               field.appendChild(GainField);
-              var opt = document.createElement('option');
-              for (var i = 1; i <= bleble.a; i++) {
+              while (pointer.firstChild) {
+                  pointer.removeChild(pointer.firstChild);
+              }
+              
+              for (var i = 1; i <= Number(bleble.a); i++) {
+                  var opt = document.createElement('option');
+                  console.log(i);
+                  console.log("zarycz plmz");
                   opt.value = i;
                   opt.innerText = i;
                   var pol = document.getElementById("pointer");
@@ -808,7 +826,39 @@
               }
               Play(supp, cust);
           })
+
+
+          const but3 = document.getElementById("select");
+          var c = document.getElementById("pointer").value - 1;
+          but3.addEventListener('click', async event => {
+              var tableIteration = document.getElementById("everyIteration");
+              while (tableIteration.firstChild) {
+                  tableIteration.removeChild(tableIteration.lastChild);
+              }
+              while (tableIteration.firstChild) {
+                  tableIteration.removeChild(tableIteration.firstChild);
+              }
+              for (var i = 0; i < bleble.everyIteration[0].length; i++) {
+                  console.log(i);
+                  var tr = document.createElement('tr');
+                  tableIteration.appendChild(tr);
+                  for (var j = 0; j < bleble.everyIteration[0][0].length; j++) {
+                      console.log(j);
+                      var td = document.createElement('td');
+                      td.width = '140';
+                      td.height = '100';
+                      td.id = "cell" + i + "," + j;
+                      console.log("cell value");
+                      console.log(bleble.everyIteration[0][i][j]);
+                      var text = document.createTextNode(bleble.everyIteration[bleble.everyIteration.length-c][i][j]);
+                      td.appendChild(text);
+                      console.log(td.value);
+                      tr.appendChild(td);
+                      console.log(td.id);
+                  }
+              }
+          })
       </script>
 
   </body>
-</html>
+</html>git 
