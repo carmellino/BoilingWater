@@ -473,6 +473,28 @@ class Transport
         this.gainArr.push(this.getFinalGain());
         this.a = this.a + 1;
     }
+
+    meh()
+    {
+        var same=0;
+        for(var k=0;k<this.a;++k)
+        {
+            same=0;
+            for(var i=0;i<this.suppliersAmount; ++i)
+            {
+                console.log(k);
+                for(var j=0;j<this.customersAmount; ++j)
+                {
+                    if(this.deals[i][j] == this.everyIteration[k][i][j])
+                        same++;
+                }
+            }
+            if(same == this.suppliersAmount * this.customersAmount)
+                return true;
+        }
+        return false;
+    }
+
     goForIt()
     {
         while(this.checkIfPositive())
@@ -480,12 +502,14 @@ class Transport
             this.change();
             //this.everyIteration.push(this.deals);
             this.ehhhh();
-            this.printEvery();
+            //this.printEvery();
             console.log('test');
             //this.printDeals();
             // this.printDeltas();
             // this.printBase();   
             if(this.path[0][0] == -1)
+                return;
+            if(this.meh())
                 return;
         }
     }
