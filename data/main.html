@@ -699,8 +699,8 @@
                       td.height = '100';
                       td.id = "cell" + i + "," + j;
                       console.log("cell value");
-                      console.log(bleble.everyIteration[0][i][j]);
-                      var text = document.createTextNode(bleble.everyIteration[0][i][j]);
+                      console.log(bleble.everyIteration[bleble.a-1][i][j]);
+                      var text = document.createTextNode(bleble.everyIteration[bleble.a - 1][i][j]);
                       td.appendChild(text);
                       console.log(td.value);
                       tr.appendChild(td);
@@ -855,8 +855,8 @@
                       td.height = '100';
                       td.id = "cell" + i + "," + j;
                       console.log("cell value");
-                      console.log(bleble.everyIteration[c][i][j]);
-                      var text = document.createTextNode(bleble.everyIteration[c][i][j]);
+                      console.log(bleble.everyIteration[c-1][i][j]);
+                      var text = document.createTextNode(bleble.everyIteration[c-1][i][j]);
                       td.appendChild(text);
                       console.log(td.value);
                       tr.appendChild(td);
