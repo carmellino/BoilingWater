@@ -15,9 +15,6 @@
           margin: 4px 2px;
           cursor: pointer;
         }
-        
-        .button1 {background-color: #4CAF50;} /* Green */
-        .button2 {background-color: #008CBA;} /* Blue */
         </style>
   </head>
   <body>
@@ -25,10 +22,6 @@
           <h1><b>Zagadnienie pośrednika</b></h1>
       </header>
       <link rel="stylesheet" href="main.css">
-      <p>Dane 1</p>
-
-      <button class="button button1">Green</button>
-      <button class="button button2">Blue</button>
 
       <div id="aaaaaaaaaaaaa"></div>
       <label style="color:black">Ilość dostawców</label>
@@ -41,9 +34,6 @@
       <label style="color:black">Ilość odbiorców</label>
       <input type="number" id="cust" value="" />
 
-
-      <label style="color:black">Oblicz</label>
-      <input id="Oblicz" value="" />
       <button id="enter">enter</button>
       <button id="bleb">bleb</button>
       <table id="Lable" border="1" cellpadding="2"></table>
@@ -611,8 +601,8 @@
               }
               var buy = new Array(x);
               for (var i = 0; i < x; i++) {
-                  console.log(document.getElementById("field" + (i - 1) + "," + x).value);
-                  buy[i] = document.getElementById("field" + (i - 1) + "," + x).value;
+                  console.log(document.getElementById("field" + (i - 1) + "," + (y-1)).value);
+                  buy[i] = document.getElementById("field" + (i - 1) + "," + (y - 1)).value;
               }
               var sell = new Array(y);
               for (var i = 0; i < y; i++) {
@@ -872,4 +862,4 @@
       </script>
 
   </body>
-</html>git 
+</html>
