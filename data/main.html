@@ -722,6 +722,7 @@
               
               for (var i = 1; i <= Number(bleble.a); i++) {
                   var opt = document.createElement('option');
+                  opt.value = i - 1;
                   console.log(i);
                   console.log("zarycz plmz");
                   opt.value = i;
@@ -829,8 +830,13 @@
 
 
           const but3 = document.getElementById("select");
-          var c = document.getElementById("pointer").value - 1;
+          console.log(bleble);
+          
           but3.addEventListener('click', async event => {
+              var tmp = document.getElementById("pointer");
+              var c = tmp.options[tmp.selectedIndex].value;
+              console.log("zmienna c");
+              console.log(c);
               var tableIteration = document.getElementById("everyIteration");
               while (tableIteration.firstChild) {
                   tableIteration.removeChild(tableIteration.lastChild);
@@ -849,8 +855,8 @@
                       td.height = '100';
                       td.id = "cell" + i + "," + j;
                       console.log("cell value");
-                      console.log(bleble.everyIteration[0][i][j]);
-                      var text = document.createTextNode(bleble.everyIteration[bleble.everyIteration.length-c][i][j]);
+                      console.log(bleble.everyIteration[c][i][j]);
+                      var text = document.createTextNode(bleble.everyIteration[c][i][j]);
                       td.appendChild(text);
                       console.log(td.value);
                       tr.appendChild(td);
